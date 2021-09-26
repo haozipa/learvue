@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <main-tabbar/>
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
+    <main-tabbar v-show="tabbar" />
   </div>
 </template>
 
@@ -11,6 +13,22 @@ export default {
   name: 'App',
   components: {
     MainTabbar
+  },
+  data() {
+    return {
+      tabbar: true
+    }
+  },
+  watch: {
+    $route(to,from) {
+      // console.log(to,from)
+      if(to.path.indexOf('detail') != -1) {
+        this.tabbar = false
+      }
+      else{
+        this.tabbar = true
+      }
+    }
   }
 }
 </script>

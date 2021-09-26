@@ -5,8 +5,20 @@
 </template>
 
 <script>
+import {getCateGory} from "network/category";
+
 export default {
-  name: "Category"
+  name: "Category",
+  data() {
+    return {
+      list: []
+    }
+  },
+  created() {
+    getCateGory().then(res => {
+      this.list = res.data.category.list || []
+    })
+  }
 }
 </script>
 

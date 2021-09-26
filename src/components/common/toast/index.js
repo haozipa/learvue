@@ -26,7 +26,7 @@ plugin.install = (Vue) => {
 		document.body.appendChild(toast.$el)
 
 		// 3.获取用户自定义数据
-		const duration = options.duration || 2500
+		const duration = options.time || 2500
 		toast.message = options.message
 		toast.isShow = true
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="goods_item">
-    <img :src="goods_list_item.show.img" alt="">
-    <div class="goods_item_info">
+  <div class="goods_item" @click="itemClick">
+    <img v-lazy="showimg" alt="" @load="imgItemLoad">
+    <div class="goods_item_info" v-if="goods_list_item !== undefined">
       <p>{{goods_list_item.title}}</p>
       <span class="price">{{goods_list_item.price}}</span>
       <span class="collect">{{goods_list_item.cfav}}</span>
@@ -17,6 +17,27 @@ export default {
       type: Object,
       default() {
         return {}
+      }
+    }
+  },
+  computed: {
+    showimg() {
+      if (this.goods_list_item !== undefined) {
+        if(this.goods_list_item.show !== undefined) return this.goods_list_item.show.img
+        if(this.goods_list_item.image !== undefined) return this.goods_list_item.image
+      }
+      else {
+        return ''
+      }
+    }
+  },
+  methods: {
+    imgItemLoad() {
+      this.$bus.$emit('imgItemLoad')
+    },
+    itemClick() {
+      if(this.goods_list_item.iid){
+        this.$router.push('/detail/' + this.goods_list_item.iid)
       }
     }
   }
